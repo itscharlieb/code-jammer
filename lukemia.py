@@ -30,12 +30,11 @@ def as_cleaned(raw_data):
     for feature_index, feature in enumerate(transposed):
         label = feature[0]
         if label in mappings.feature_mappings:
-            for sample_index in range(1, len(feature)):
-                type = feature[i]
-                feature[i] = mappings.convert(label, type)
+            for index in range(1, len(feature)):
+                cls = feature[index]
+                feature[index] = mappings.convert(label, cls)
     features = _transpose(transposed)
-    stripped = features.remove(0) #remove labels
-    return stripped
+    return features[1:]
 
 
 def load_raw_data(csv_file):

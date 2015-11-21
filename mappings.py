@@ -1,50 +1,51 @@
 feature_types = {
-    'YES_NO': {
-        'YES': 1,
-        'NO': 0
+    'yes_no': {
+        'yes': 1,
+        'no': 0,
     },
 
-    'POS_NEG': {
-        'POS': 1,
-        'NEG': 0,
-        'ND': -1,
+    'pos_neg': {
+        'pos': 1,
+        'neg': 0,
+        'nd': -1,
+        'notdone': -1
     },
 }
 
 
 feature_mappings = {
     'SEX': {
-        'F': 1,
-        'M': 0
+        'f': 1,
+        'm': 0
     },
 
-    'PRIOR.MAL': feature_types['YES_NO'],
+    'PRIOR.MAL': feature_types['yes_no'],
 
-    'PRIOR.CHEMO': feature_types['YES_NO'],
+    'PRIOR.CHEMO': feature_types['yes_no'],
 
-    'PRIOR.XRT': feature_types['YES_NO'],
+    'PRIOR.XRT': feature_types['yes_no'],
 
-    'Infection': feature_types['YES_NO'],
+    'Infection': feature_types['yes_no'],
 
-    'ITD': feature_types['POS_NEG'],
+    'ITD': feature_types['pos_neg'],
 
-    'D835': feature_types['POS_NEG'],
+    'D835': feature_types['pos_neg'],
 
-    'Ras.Stat': feature_types['POS_NEG'],
+    'Ras.Stat': feature_types['pos_neg'],
 
     'Chemo.Simplest': {
-        'Anthra-Plus': 0,
-        'Anthra-HDAC': 1,
-        'HDAC-Plus': 2,
-        'Flu-HDAC': 3,
-        'StdAraC-Plus': 4,
+        'anthra-plus': 0,
+        'anthra-hdac': 1,
+        'hdac-plus': 2,
+        'flu-hdac': 3,
+        'stdarac-plus': 4,
     }
 }
 
 
-def convert(type, label):
+def convert(label, cls):
     """
     :param label:
     :return:
     """
-    return feature_mappings['type']['label']
+    return feature_mappings[label][cls.lower()]
