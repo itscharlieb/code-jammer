@@ -89,7 +89,6 @@ for row in a:
 print(b)
 svc = svm.SVC(kernel='linear', C=1).fit(c,b)
 print "finished one"
-
 #svc = svm.SVC(kernel='linear', C=0.01).fit(a,b)
 print "finished the other"
 spickle = pickle.dumps(svc)
