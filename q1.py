@@ -1,3 +1,4 @@
+import sys
 import os
 import csv
 import numpy as np
@@ -5,9 +6,6 @@ print(__doc__)
 #import matplotlib.pyplot as plt
 from sklearn import svm, datasets
 
-fs = []
-ls = []
-d = {}
 cs = {"M":1
      ,"F":0
      ,"YES":1
@@ -21,7 +19,23 @@ cs = {"M":1
      ,"NA":0
      }
 
-def parse_matrix(fs):
+#Function that takes a filename as an argument and outputs a tuple
+#containing the test data matrix and the labels matrix.
+def parse_matrix_labels(fname):
+    fs = []
+    ls = []
+    d = {}
+    with open(fname, 'rt') as cf:
+        c = csv.reader(cf, delimiter='\t')
+        for r in c:
+            d[r[0]] = r[1:]
+
+    for row in d:
+        ls.append(d[row][265])
+        fs.append(d[row][0:265])
+
+    ls = [int('C' in l) for l in ls]
+
     for f in fs:
         for e in f:
             i = f.index(e)
@@ -64,21 +78,12 @@ def parse_matrix(fs):
                     continue
                 e = float(e)
                 f[i] = e
-    
-with open('data.txt', 'rt') as cf:
-    c = csv.reader(cf, delimiter='\t')
-    for r in c:
-        d[r[0]] = r[1:]
+    return (fs, ls)
 
-for row in d:
-    ls.append(d[row][265])
-    fs.append(d[row][0:265])
-
-ls = [int('C' in l) for l in ls]
-
-parse_matrix(fs)
-
-print(ls)
+f = sys.argv[1]
+a, b = parse_matrix_labels(f)
+print(a)
+print(b)
 
 # import some data to play with
 #iris = datasets.load_iris()
