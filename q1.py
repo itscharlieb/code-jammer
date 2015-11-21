@@ -7,22 +7,24 @@ from sklearn import svm, datasets
 d = {}
 
 cs = {"M":1
-        ,"F":0
-        ,"YES":1
-        ,"NO":0
-        ,"Yes":1
-        ,"No":0
-        ,"NEG":-1
-        ,"ND":0
-        ,"NotDone":0
-        ,"POS":1
-        ,"Anthra-HDAC":1
-        ,"HDAC-Plus":1
-        ,"Flu-HDAC":1
-        ,"StdAraC-Plus":1
-        ,"Anthra-Plus":1
-        ,"NA":0
-        }
+     ,"F":0
+     ,"YES":1
+     ,"NO":0
+     ,"Yes":1
+     ,"No":0
+     ,"NEG":-1
+     ,"ND":0
+     ,"NotDone":0
+     ,"POS":1
+     ,"NA":0
+     }
+
+ts = ['Anthra-HDAC'
+     ,'HDAC-Plus'
+     ,'Flu-HDAC'
+     ,'StdAraC-Plus'
+     ,'Anthra-Plus'
+     ]
 
 with open('data.txt', 'rt') as cf:
     c = csv.reader(cf, delimiter='\t')
@@ -34,17 +36,61 @@ ls = []
 
 for row in d:
     ls.append(d[row][265])
-    fs.append(d[row][0:264])
+    fs.append(d[row][0:265])
 
 ls = [int('C' in l) for l in ls]
 
 for f in fs:
-    f[0] = int('F' in f[0])
-    f[1] = float(f[1])/10
-
-print(ls)
+    for e in f:
+        i = f.index(e)
+        #if e in ts:
+        if e == 'Anthra-HDAC':
+            print("found anthra-hdac")
+            f[i] = 1
+            f.insert(i+1, 0)
+            f.insert(i+2, 0)
+            f.insert(i+3, 0)
+            f.insert(i+4, 0)
+        elif e == 'HDAC-Plus':
+            print("found hdac-plus")
+            f[i] = 0
+            f.insert(i+1, 1)
+            f.insert(i+2, 0)
+            f.insert(i+3, 0)
+            f.insert(i+4, 0)
+        elif e == 'Flu-HDAC':
+            print("found flu-hdac")
+            f[i] = 0
+            f.insert(i+1, 0)
+            f.insert(i+2, 1)
+            f.insert(i+3, 0)
+            f.insert(i+4, 0)
+        elif e == 'StdAraC-Plus':
+            print("found found stdarac-plus")
+            f[i] = 0
+            f.insert(i+1, 0)
+            f.insert(i+2, 0)
+            f.insert(i+3, 1)
+            f.insert(i+4, 0)
+        elif e == 'Anthra-Plus':
+            print("found anthra-plus")
+            f[i] = 0
+            f.insert(i+1, 0)
+            f.insert(i+2, 0)
+            f.insert(i+3, 0)
+            f.insert(i+4, 1)
+        elif e in cs:
+            print("found e in cs")
+            e = cs[e]
+            f[i] = e
+        else:
+            print("hit final else")
+            if type(e) is int:
+                continue
+            e = float(e)
+            f[i] = e
+    
 print(fs)
-
 # import some data to play with
 #iris = datasets.load_iris()
 #X = iris.data[:, :2]  # we only take the first two features. We could
