@@ -17,7 +17,64 @@ cs = {"M":1
      ,"NotDone":0
      ,"POS":1
      ,"NA":0
+     ,"":0
      }
+
+def parse_testing_matrix(lname):
+    fs = []
+    d = {}
+
+    for r in lname:
+        a = r.split("\t")
+        d[a[0]] = a[1:]
+        
+    print(d)
+
+    for row in d:
+        fs.append(d[row][0:265])
+
+    for f in fs:
+        for e in f:
+            i = f.index(e)
+            if e == 'Anthra-HDAC':
+                f[i] = 1
+                f.insert(i+1, 0)
+                f.insert(i+2, 0)
+                f.insert(i+3, 0)
+                f.insert(i+4, 0)
+            elif e == 'HDAC-Plus':
+                f[i] = 0
+                f.insert(i+1, 1)
+                f.insert(i+2, 0)
+                f.insert(i+3, 0)
+                f.insert(i+4, 0)
+            elif e == 'Flu-HDAC':
+                f[i] = 0
+                f.insert(i+1, 0)
+                f.insert(i+2, 1)
+                f.insert(i+3, 0)
+                f.insert(i+4, 0)
+            elif e == 'StdAraC-Plus':
+                f[i] = 0
+                f.insert(i+1, 0)
+                f.insert(i+2, 0)
+                f.insert(i+3, 1)
+                f.insert(i+4, 0)
+            elif e == 'Anthra-Plus':
+                f[i] = 0
+                f.insert(i+1, 0)
+                f.insert(i+2, 0)
+                f.insert(i+3, 0)
+                f.insert(i+4, 1)
+            elif e in cs:
+                e = cs[e]
+                f[i] = e
+            else:
+                if type(e) is int:
+                    continue
+                e = float(e)
+                f[i] = e
+    return (fs)
 
 #Function that takes a filename as an argument and outputs a tuple
 #containing the test data matrix and the labels matrix.
