@@ -39,6 +39,12 @@ feature_mappings = {
         'hdac-plus': 2,
         'flu-hdac': 3,
         'stdarac-plus': 4,
+    },
+
+    'resp.simple': {
+        'complete_remission': 0,
+        'resistant': 1,
+        'na': 2
     }
 }
 
