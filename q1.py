@@ -4,9 +4,6 @@ import csv
 print(__doc__)
 import pickle
 import numpy as np
-import matplotlib.pyplot as plt
-from sklearn import svm, datasets
-#import matplotlib.pyplot as plt
 from sklearn import svm, datasets
 
 cs = {"M":1
