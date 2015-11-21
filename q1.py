@@ -1,11 +1,13 @@
+import os
 import csv
 import numpy as np
 print(__doc__)
 #import matplotlib.pyplot as plt
 from sklearn import svm, datasets
 
+fs = []
+ls = []
 d = {}
-
 cs = {"M":1
      ,"F":0
      ,"YES":1
@@ -19,20 +21,54 @@ cs = {"M":1
      ,"NA":0
      }
 
-ts = ['Anthra-HDAC'
-     ,'HDAC-Plus'
-     ,'Flu-HDAC'
-     ,'StdAraC-Plus'
-     ,'Anthra-Plus'
-     ]
-
+def parse_matrix(fs):
+    for f in fs:
+        for e in f:
+            i = f.index(e)
+            #if e in ts:
+            if e == 'Anthra-HDAC':
+                f[i] = 1
+                f.insert(i+1, 0)
+                f.insert(i+2, 0)
+                f.insert(i+3, 0)
+                f.insert(i+4, 0)
+            elif e == 'HDAC-Plus':
+                f[i] = 0
+                f.insert(i+1, 1)
+                f.insert(i+2, 0)
+                f.insert(i+3, 0)
+                f.insert(i+4, 0)
+            elif e == 'Flu-HDAC':
+                f[i] = 0
+                f.insert(i+1, 0)
+                f.insert(i+2, 1)
+                f.insert(i+3, 0)
+                f.insert(i+4, 0)
+            elif e == 'StdAraC-Plus':
+                f[i] = 0
+                f.insert(i+1, 0)
+                f.insert(i+2, 0)
+                f.insert(i+3, 1)
+                f.insert(i+4, 0)
+            elif e == 'Anthra-Plus':
+                f[i] = 0
+                f.insert(i+1, 0)
+                f.insert(i+2, 0)
+                f.insert(i+3, 0)
+                f.insert(i+4, 1)
+            elif e in cs:
+                e = cs[e]
+                f[i] = e
+            else:
+                if type(e) is int:
+                    continue
+                e = float(e)
+                f[i] = e
+    
 with open('data.txt', 'rt') as cf:
     c = csv.reader(cf, delimiter='\t')
     for r in c:
         d[r[0]] = r[1:]
-
-fs = []
-ls = []
 
 for row in d:
     ls.append(d[row][265])
@@ -40,57 +76,10 @@ for row in d:
 
 ls = [int('C' in l) for l in ls]
 
-for f in fs:
-    for e in f:
-        i = f.index(e)
-        #if e in ts:
-        if e == 'Anthra-HDAC':
-            print("found anthra-hdac")
-            f[i] = 1
-            f.insert(i+1, 0)
-            f.insert(i+2, 0)
-            f.insert(i+3, 0)
-            f.insert(i+4, 0)
-        elif e == 'HDAC-Plus':
-            print("found hdac-plus")
-            f[i] = 0
-            f.insert(i+1, 1)
-            f.insert(i+2, 0)
-            f.insert(i+3, 0)
-            f.insert(i+4, 0)
-        elif e == 'Flu-HDAC':
-            print("found flu-hdac")
-            f[i] = 0
-            f.insert(i+1, 0)
-            f.insert(i+2, 1)
-            f.insert(i+3, 0)
-            f.insert(i+4, 0)
-        elif e == 'StdAraC-Plus':
-            print("found found stdarac-plus")
-            f[i] = 0
-            f.insert(i+1, 0)
-            f.insert(i+2, 0)
-            f.insert(i+3, 1)
-            f.insert(i+4, 0)
-        elif e == 'Anthra-Plus':
-            print("found anthra-plus")
-            f[i] = 0
-            f.insert(i+1, 0)
-            f.insert(i+2, 0)
-            f.insert(i+3, 0)
-            f.insert(i+4, 1)
-        elif e in cs:
-            print("found e in cs")
-            e = cs[e]
-            f[i] = e
-        else:
-            print("hit final else")
-            if type(e) is int:
-                continue
-            e = float(e)
-            f[i] = e
-    
-print(fs)
+parse_matrix(fs)
+
+print(ls)
+
 # import some data to play with
 #iris = datasets.load_iris()
 #X = iris.data[:, :2]  # we only take the first two features. We could
