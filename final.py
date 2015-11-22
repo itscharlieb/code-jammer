@@ -39,10 +39,23 @@ def dispatch(l):
         print("bad parse on therapy")
  
 def anthra_plus(l):
-    v = -5.34-0.1711
-      * l[d["Age.at.Dx"]]
-      + 3.78*l[d["ALBUMIN"]]
-+ 0.01072*l[d["FIBRINOGEN"]]+2.904*l[d["CASP7.cl198"]]-1.747*l[d["CASP8"]]-3.62*l[d["EGFR.pY992"]]-4.34*l[d["ERG"]]+2.915*l[d["GSKA_B.pS21_9"]]+4.90*l[d["H3K4Me3"]]+2.033*l[d["IRS1.pS1101"]]+3.199*l[d["PIK3CA"]]+3.658*l[d["PTEN.pS380T382T383"]]-1.243*l[d["RELA"]]-2.678*l[d["RPS6KB1.pT389"]]+2.815*l[d["VASP"]]
+    v = -5.34-0.1711 \
+      * l[d["Age.at.Dx"]] \
+      + 3.78*l[d["ALBUMIN"]] \
+      + 0.01072*l[d["FIBRINOGEN"]] \
+      +2.904*l[d["CASP7.cl198"]] \
+      -1.747*l[d["CASP8"]] \
+      -3.62*l[d["EGFR.pY992"]] \
+      -4.34*l[d["ERG"]] \
+      +2.915*l[d["GSKA_B.pS21_9"]] \
+      +4.90*l[d["H3K4Me3"]] \
+      +2.033*l[d["IRS1.pS1101"]] \
+      +3.199*l[d["PIK3CA"]] \
+      +3.658*l[d["PTEN.pS380T382T383"]] \
+      -1.243*l[d["RELA"]] \
+      -2.678*l[d["RPS6KB1.pT389"]] \
+      +2.815*l[d["VASP"]]
+
     p = math.exp(v)/(1+math.exp(v))
 
     remission_duration = -5.070*l[d["Age.at.Dx"]] \
