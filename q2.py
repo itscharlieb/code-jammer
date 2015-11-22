@@ -2,9 +2,9 @@ import sys
 import os
 import csv
 import numpy as np
+import test_data
 print(__doc__)
-#import matplotlib.pyplot as plt
-from sklearn import svm, datasets
+from sklearn import svm, datasets, grid_search
 
 cs = {"M":1
      ,"F":0
@@ -17,6 +17,7 @@ cs = {"M":1
      ,"NotDone":0
      ,"POS":1
      ,"NA":0
+     ,"":0
      }
 #Function that takes a filename as an argument and outputs a tuple
 #containing the test data matrix and the remission days matrix.
@@ -41,6 +42,7 @@ def parse_matrix_remission_days(fname):
             ls[i] = float(l)
 
     for f in fs:
+        ind = fs.index(f)
         for e in f:
             i = f.index(e)
             #if e in ts:
@@ -82,9 +84,17 @@ def parse_matrix_remission_days(fname):
                     continue
                 e = float(e)
                 f[i] = e
+        fs[ind] = f
     return (fs, ls)
+
 f = sys.argv[1]
 a, b = parse_matrix_remission_days(f)
-print(a)
-print(b)
+
+params = { "C":[1, 10, 100, 150, 200], "gamma":[1/265, 1/200, 1/150, 1/100] }
+
+svr = svm.SVR()
+clf = grid_search.GridSearchCV(svr, params)
+clf.fit(a, b)
+print(clf.score(a, b))
+print(clf.predict(test_data.test))
 
