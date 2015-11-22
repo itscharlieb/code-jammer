@@ -31,36 +31,6 @@ def parse_testing_matrix(lname):
     for f in fs:
         for e in f:
             i = f.index(e)
-            # if e == 'Anthra-HDAC':
-            #     f[i] = 1
-            #     f.insert(i+1, 0)
-            #     f.insert(i+2, 0)
-            #     f.insert(i+3, 0)
-            #     f.insert(i+4, 0)
-            # elif e == 'HDAC-Plus':
-            #     f[i] = 0
-            #     f.insert(i+1, 1)
-            #     f.insert(i+2, 0)
-            #     f.insert(i+3, 0)
-            #     f.insert(i+4, 0)
-            # elif e == 'Flu-HDAC':
-            #     f[i] = 0
-            #     f.insert(i+1, 0)
-            #     f.insert(i+2, 1)
-            #     f.insert(i+3, 0)
-            #     f.insert(i+4, 0)
-            # elif e == 'StdAraC-Plus':
-            #     f[i] = 0
-            #     f.insert(i+1, 0)
-            #     f.insert(i+2, 0)
-            #     f.insert(i+3, 1)
-            #     f.insert(i+4, 0)
-            # elif e == 'Anthra-Plus':
-            #     f[i] = 0
-            #     f.insert(i+1, 0)
-            #     f.insert(i+2, 0)
-            #     f.insert(i+3, 0)
-            #     f.insert(i+4, 1)
             if e in cs:
                 e = cs[e]
                 f[i] = e
