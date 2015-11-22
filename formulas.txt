@@ -1,0 +1,128 @@
+#Note: P(1) < 0.5 -> 1, P(1) >= 0.5 -> 0
+
+Anthra-HDAC
+
+    Remission/Resistant (1/0)
+
+    P(1) = exp(Y')/(1 + exp(Y'))
+    Y' = 1.02 - 0.0773 PB.BLAST + 1.864 HGB - 0.1800 CD34 - 0.1496 CD19 + 8.42 EGFR - 4.12 KDR
+         - 4.25 NRP1 + 3.68 PRKCB.II - 7.13 PRKCD.pS664 - 1.534 SMAD2.pS465 + 9.53 TAZ
+
+    Remission_Duration = 260.8 - 0.956 BM.BLAST - 0.482 PLT - 1.202 CD13 + 47.7 ACTB
+                     - 35.1 AKT1_2_3.pS473 - 87.9 ASNS - 24.05 BAD + 39.8 BID + 181.0 BIRC2
+                     - 83.9 CBL + 42.24 CD74 - 67.4 DLX1 - 173.8 ERBB3 + 44.6 H3K27Me3
+                     + 42.1 HDAC1 + 111.6 ITGA2 - 67.7 MAPK1 - 27.5 PIM1 + 75.4 PPARA
+                     + 34.4 SIRT1 + 59.0 SMAD6 - 50.7 TCF4 + 116.5 XIAP
+
+    SEX
+    0    Overall_Survival = 503.1 - 4.960 Age.at.Dx - 0.2212 FIBRINOGEN + 33.8 BAD.pS155
+                            + 95.6 BIRC2 - 59.0 BMI1 - 103.0 DLX1 - 79.1 ERG + 50.4 H3histon
+                            - 36.3 IRS1.pS1101 + 37.3 MAPK14.pT180Y182 + 58.3 MDM4 + 98.6 MSI2
+                            - 29.7 PRKAA1_2.pT172 - 34.8 PRKCD.pT507 + 62.9 PTK2
+                            - 41.0 RB1.pS807_811 - 119.0 SMAD5.pS463 + 69.8 WTAP
+
+    1    Overall_Survival = 568.4 - 4.960 Age.at.Dx - 0.2212 FIBRINOGEN + 33.8 BAD.pS155
+                            + 95.6 BIRC2 - 59.0 BMI1 - 103.0 DLX1 - 79.1 ERG + 50.4 H3histon
+                            - 36.3 IRS1.pS1101 + 37.3 MAPK14.pT180Y182 + 58.3 MDM4 + 98.6 MSI2
+                            - 29.7 PRKAA1_2.pT172 - 34.8 PRKCD.pT507 + 62.9 PTK2
+                            - 41.0 RB1.pS807_811 - 119.0 SMAD5.pS463 + 69.8 WTAP
+
+StdAraC-Plus
+
+    Remission/Resistant (1/0)
+    P(1)  =  exp(Y')/(1 + exp(Y'))
+    Y' = 1.883 + 3.84 YWHAE
+
+    Remission_Duration = 130.740 + 0.000254 ABS.BLST + 0.506072 AKT1_2_3.pT308 + 113.185 ASNS
+                         + 0.107952 FN1 + 4.39748 GATA3 + 4.65318 KIT
+                         - 17.7418 MAP2K1_2.pS217_221 + 44.7740 MSI2 - 0.018507 RPS6KB1
+                         - 55.9748 TP53.pS15 - 24.9313 WTAP - 2.04675 ZNF296 
+    Infection
+    0          Overall_Survival = 155.5 - 0.998 CD34 + 58.8 FN1 + 7.3 LYN + 77.8 NCL
+                                  - 54.6 PIK3CA + 79.7 STAT1.pY701 + 105.1 ERBB2.pY1248
+                                  + 5.1 TAZ.pS89 - 20.2 PRKAA1_2.pT172 + 24.8 CBL
+
+    1          Overall_Survival = 298.8 - 0.998 CD34 + 58.8 FN1 + 7.3 LYN + 77.8 NCL
+                                  - 54.6 PIK3CA + 79.7 STAT1.pY701 + 105.1 ERBB2.pY1248
+                                  + 5.1 TAZ.pS89 - 20.2 PRKAA1_2.pT172 + 24.8 CBL
+     
+HDAC-Plus
+
+    Remission/Resistant (1/0)
+
+    P(1)  =  exp(Y')/(1 + exp(Y'))
+    Y' = 2.18 + 7.38 CASP7.cl198
+
+    Remission_Duration = -55.9000 + 3.71006 BM.BLAST - 24.2804 CD20 - 0.063989 BAD
+                     - 1.88277 CDKN2A + 7.84340 CTSG - 23.9177 NOTCH3 + 158.370 RAC1_2_3
+
+    Overall_Survival = -12.02 + 312.9 H3histon + 6.149 CD19 - 125.2 ZNF346 + 81.5 INPPL1 - 28.42 STAT1
+
+Flu-HDAC
+    
+    Remission/Resistant (1/0)
+
+    P(1) = exp(Y')/(1 + exp(Y'))
+    Y' = 0
+
+    Ras.Stat
+    -1        Remission_Duration = 557.5 - 3.689 BM.BLAST - 52.2 CASP9 - 43.0 EIF2AK2
+                                   - 238.2 Fli1 + 80.2 HNRNPK + 41.1 MAPK14.pT180Y182
+                                   - 43.4 PA2G4.pT37_46 - 97.5 PIM1
+
+    0         Remission_Duration = 104.4 - 3.689 BM.BLAST - 52.2 CASP9 - 43.0 EIF2AK2
+                                   - 238.2 Fli1 + 80.2 HNRNPK + 41.1 MAPK14.pT180Y182
+                                   - 43.4 PA2G4.pT37_46 - 97.5 PIM1
+
+    1         Remission_Duration = 346.5 - 3.689 BM.BLAST - 52.2 CASP9 - 43.0 EIF2AK2
+                                   - 238.2 Fli1 + 80.2 HNRNPK + 41.1 MAPK14.pT180Y182
+                                   - 43.4 PA2G4.pT37_46 - 97.5 PIM1
+
+    Ras.Stat
+    -1        Overall_Survival = 334.5 - 145.9 Fli1 - 152.3 SMAD3
+
+    0         Overall_Survival = -133 - 145.9 Fli1 - 152.3 SMAD3
+
+    1         Overall_Survival = 142.4 - 145.9 Fli1 - 152.3 SMAD3
+
+Anthra-Plus (use global average)
+
+Regression Equation
+
+P(1)  =  exp(Y')/(1 + exp(Y'))
+
+
+Y' = -5.34 - 0.1711 Age.at.Dx + 3.78 ALBUMIN + 0.01072 FIBRINOGEN + 2.904 CASP7.cl198
+     - 1.747 CASP8 - 3.62 EGFR.pY992 - 4.34 ERG + 2.915 GSKA_B.pS21_9 + 4.90 H3K4Me3
+     + 2.033 IRS1.pS1101 + 3.199 PIK3CA + 3.658 PTEN.pS380T382T383 - 1.243 RELA
+     - 2.678 RPS6KB1.pT389 + 2.815 VASP
+
+Ras.Stat
+-1        Remission_Duration = 517.1 - 5.070 Age.at.Dx + 61.7 ERBB2.pY1248 - 1.395 BM.BLAST
+                               - 72.5 ARC - 46.2 CBL - 25.0 CCND3 - 42.0 CCNE2 - 46.4 CDK2
+                               + 68.1 DIABLO - 65.7 EIF2AK2 - 79.5 ERG + 49.9 INPPL1
+                               + 106.7 MDM4 + 32.0 MET.pY1230_1234_1235 - 79.2 PTGS2
+                               + 40.9 PTK2 + 94.4 PTPN11 + 61.8 TNK1 - 134.2 TRIM24
+
+0         Remission_Duration = 430.0 - 5.070 Age.at.Dx + 61.7 ERBB2.pY1248 - 1.395 BM.BLAST
+                               - 72.5 ARC - 46.2 CBL - 25.0 CCND3 - 42.0 CCNE2 - 46.4 CDK2
+                               + 68.1 DIABLO - 65.7 EIF2AK2 - 79.5 ERG + 49.9 INPPL1
+                               + 106.7 MDM4 + 32.0 MET.pY1230_1234_1235 - 79.2 PTGS2
+                               + 40.9 PTK2 + 94.4 PTPN11 + 61.8 TNK1 - 134.2 TRIM24
+
+1         Remission_Duration = 514.3 - 5.070 Age.at.Dx + 61.7 ERBB2.pY1248 - 1.395 BM.BLAST
+                               - 72.5 ARC - 46.2 CBL - 25.0 CCND3 - 42.0 CCNE2 - 46.4 CDK2
+                               + 68.1 DIABLO - 65.7 EIF2AK2 - 79.5 ERG + 49.9 INPPL1
+                               + 106.7 MDM4 + 32.0 MET.pY1230_1234_1235 - 79.2 PTGS2
+                               + 40.9 PTK2 + 94.4 PTPN11 + 61.8 TNK1 - 134.2 TRIM24
+
+PRIOR.CHEMO
+0            Overall_Survival = 198.3 - 3.463 Age.at.Dx - 0.593 WBC + 82.0 CAV1 + 20.62 HGB
+                                + 41.1 BAD.pS136 + 48.1 BIRC2 + 35.9 CTNNB1 - 67.2 DLX1
+                                + 31.1 H3K27Me3 - 29.8 PRKAA1_2.pT172 + 63.7 SRC.pY416
+                                - 75.3 TGM2 + 35.4 TNK1
+
+1            Overall_Survival = 122.4 - 3.463 Age.at.Dx - 0.593 WBC + 82.0 CAV1 + 20.62 HGB
+                                + 41.1 BAD.pS136 + 48.1 BIRC2 + 35.9 CTNNB1 - 67.2 DLX1
+                                + 31.1 H3K27Me3 - 29.8 PRKAA1_2.pT172 + 63.7 SRC.pY416
+                                - 75.3 TGM2 + 35.4 TNK1
