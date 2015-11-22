@@ -47,3 +47,44 @@ def stdarac_plus(l):
         #RESISTANT
         remission_days = "NA"
         print(l[0], "RESISTANT", remission_days, survival_days)
+
+
+
+
+
+def anthra_hdac_calc(somelist):
+    v = 1.02 
+    v = v-0.0773*somelist[17] #PB.Blast
+    v = v+ 1.864*somelist[20] # HGB
+    v = v-0.18*somelist[29] #CD34
+    v = v-0.1496*somelist[34] #CD19
+    v= v+8.42*somelist[92] #EGFR
+    v= v-4.12*somelist[141] #KDR
+    v= v-4.25*somelist[172] #NRP1
+    v= v+3.68*somelist[196] #PRKCB.II
+    v= v-7.13*somelist[198] #PRKCD.pS664
+    v= v-1.534*somelist[221] #SMAD2.pS465
+    v= v+9.53*somelist[245] #TAZ
+
+    numerator = math.exp(v)
+
+    denominator = 1+math.exp(v)
+    solution = numerator/denominator
+    if solution > 0.5 :
+        #don't have to calculate for days in remission. (set as NA)
+        #calculate for survival days
+        #finally return a string to stdout with patientid#, remission_status, remission days, and survival days.
+        resdur = 260.8 - 0.956*14 - 0.482*21 - 1.202*27 + 47.7*35
+                - 35.1*28 - 87.9*42 - 24.05*45 + 39.8*55 + 181.0*56
+                - 83.9*68 + 42.24*75 - 67.4*90 - 173.8*103 + 44.6*119
+                + 42.1*122 + 111.6*135 - 67.7*150 - 27.5*185 + 75.4*188
+                + 34.4*271 + 59.0*226 - 50.7*247 + 116.5*258
+        
+
+    else:
+        #calculate for days in remission
+
+        #calculate for survival days
+        #finally return a string to stdout with patientid#, remission_status, remission days, and survival days.
+
+
