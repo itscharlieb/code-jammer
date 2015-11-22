@@ -237,3 +237,48 @@ def anthra_hdac_calc(somelist):
         #finally return a string to stdout with patientid#, remission_status, remission days, and survival days.
 
 
+def anthra_hdac_calc(somelist):
+
+    #remisssion probability
+    v = 1.02 - 0.0773*somelist[d{'PB.BLAST'}] + 1.864*somelist[d{'HGB'}] - 0.1800*somelist[d{'CD34'}] - 0.1496*somelist[d{'CD19'}] + 8.42*somelist[d{'EGFR'}] - 4.12*somelist[d{'KDR'}]
+         - 4.25*somelist[d{'NRP1'}] + 3.68*somelist[d{'PRKCB.II'}] - 7.13*somelist[d{'PRKCD.pS664'}] - 1.534*somelist[d{'SMAD2.pS465'}] + 9.53*somelist[d{'TAZ'}]
+    numerator = math.exp(v)
+    denominator = 1+math.exp(v)
+    solution = numerator/denominator
+
+    #
+    
+    if solution > 0.5 :
+        #don't have to calculate for days in remission. (set as NA)
+        remstatus = 'RESISTANT'
+        remdur = 'NA'
+
+    else:
+        remstatus = 'COMPLETE_REMISSION'
+                                                                                                      
+        #calculate for days in remission
+        remdur = 260.8 - 0.956*somelist[d{'BM.BLAST'}] - 0.482*somelist[d{'PLT'}]- 1.202*somelist[d{'CD13'}] + 47.7*somelist[d{'ACTB'}]
+                     - 35.1*somelist[d{'AKT1_2_3.pS473'}] - 87.9*somelist[d{'ASNS'}] - 24.05*somelist[d{'BAD'}] + 39.8*somelist[d{'BID'}] + 181.0*somelist[d{'BIRC2'}]
+                     - 83.9*somelist[d{'CBL'}] + 42.24*somelist[d{'CD74'}] - 67.4*somelist[d{'DLX1'}] - 173.8*somelist[d{'ERBB3'}] + 44.6*somelist[d{'H3K27Me3'}]
+                     + 42.1*somelist[d{'HDAC1'}] + 111.6*somelist[d{'ITGA2'}] - 67.7*somelist[d{'MAPK1'}] - 27.5*somelist[d{'PIM1'}] + 75.4*somelist[d{'PPARA}]
+                     + 34.4*somelist[d{'SIRT1'}] + 59.0*somelist[d{'SMAD6'}] - 50.7*somelist[d{'TCF4'}] + 116.5*somelist[d{'XIAP'}]
+
+    if (somelist[1]== 0):
+        Overall_Survival = 503.1 - 4.960*somelist[d{'Age.at.Dx'}] - 0.2212*somelist[d{'FIBRINOGEN'}] + 33.8*somelist[d{'BAD.pS155'}]
+                            + 95.6*somelist[d{'BIRC2'}] - 59.0*somelist[d{'BMI1'}] - 103.0somelist[d{'DLX1'}]- 79.1*somelist[d{'ERG'}] + 50.4*somelist[d{'H3histon'}]
+                            - 36.3*somelist[d{'IRS1.pS1101'}] + 37.3*somelist[d{'MAPK14.pT180Y182'}] + 58.3*somelist[d{'MDM4'}] + 98.6*somelist[d{'MSI2'}]
+                            - 29.7*somelist[d{'PRKAA1_2.pT172'}] - 34.8*somelist[d{'PRKCD.pT507'}] + 62.9*somelist[d{'PTK2'}]
+                            - 41.0*somelist[d{'RB1.pS807_811'}] - 119.0*somelist[d{'SMAD5.pS463'}] + 69.8*somelist[d{'WTAP'}]
+        print(somelist[0], remstatus, remdur, Overall_Survival)
+
+    else:
+        Overall_Survival = 503.1 - 4.960*somelist[d{'Age.at.Dx'}] - 0.2212*somelist[d{'FIBRINOGEN'}] + 33.8*somelist[d{'BAD.pS155'}]
+                            + 95.6*somelist[d{'BIRC2'}] - 59.0*somelist[d{'BMI1'}] - 103.0somelist[d{'DLX1'}]- 79.1*somelist[d{'ERG'}] + 50.4*somelist[d{'H3histon'}]
+                            - 36.3*somelist[d{'IRS1.pS1101'}] + 37.3*somelist[d{'MAPK14.pT180Y182'}] + 58.3*somelist[d{'MDM4'}] + 98.6*somelist[d{'MSI2'}]
+                            - 29.7*somelist[d{'PRKAA1_2.pT172'}] - 34.8*somelist[d{'PRKCD.pT507'}] + 62.9*somelist[d{'PTK2'}]
+                            - 41.0*somelist[d{'RB1.pS807_811'}] - 119.0*somelist[d{'SMAD5.pS463'}] + 69.8*somelist[d{'WTAP'}]
+        print(somelist[0], remstatus, remdur, Overall_Survival)
+
+
+
+
