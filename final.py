@@ -294,7 +294,7 @@ def anthra_hdac(somelist):
                             - 41.0*somelist[d['RB1.pS807_811']] - 119.0*somelist[d['SMAD5.pS463']] + 69.8*somelist[d['WTAP']]
         return(somelist[0], remstatus, remdur, Overall_Survival)
                                    
-data = open("data.txt", "rt").read()
+data = sys.stdin.read()
 dat = data.split("\n")
 a = parse_testing_matrix(dat)
 s = []
