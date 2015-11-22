@@ -1,5 +1,28 @@
 import math
 
+def hdac_plus(l):
+    v = 2.18 + 7.38*l[62]
+    p = math.exp(v)/(1+math.exp(v))
+    survival_duration = -12.02
+                      + 312.9*l[118] # H3histon
+                      + 6.149*l[34]  # CD19
+                      - 125.2*l[265] # ZNF346
+                      + 81.5*l[133]  # INPPL1
+                      - 28.4*l[235]  # STAT1
+    if p < 0.5:
+        remission_duration = -55.9
+                           + 3.71006*l[14] # BM.BLAST
+                           - 24.2804*l[32] # CD20
+                           - 0.063989*l[45]# BAD
+                           - 1.88277*l[80] # CDKN2A
+                           + 7.84340*l[88] # CTSG
+                           - 23.9177*l[168]# NOTCH3
+                           + 158.370*l[207]# RAC1_2_3
+        print(l[0], "COMPLETE REMISSION", remission_duration, survival_duration)
+    else:
+        remission_duration = "NA"
+        print(l[0], "RESISTANT", remission_duration, survival_duration)
+
 def stdarac_plus(l):
     v = 1.883 + (3.84 * l[262])
     p = math.exp(v)/(1+math.exp(v))
