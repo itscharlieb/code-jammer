@@ -1,47 +1,53 @@
 import math
 import sys
+import re
+
+treatments = ["Anthra-HDAC", "Anthra-Plus", "HDAC-Plus", "StdAraC-Plus", "Flu-HDAC"]
+
+cs = { "M":1 ,"F":0 ,"YES":1 ,"NO":0 ,"Yes":1 ,"No":0 ,"NEG":-1 ,"ND":0 ,"NotDone":0 ,"POS":1 ,"NA":0 ,"":0, "COMPLETE_REMISSION":1, "RESISTANT":0}
 
 d = {"BCL2": 51, "SIRT1": 217, "NOTCH3": 168, "ITGA2": 135, "MAP2K1_2.pS217_221": 149, "H3histon": 118, "EGFR": 92, "BAD": 45, "H3K4Me2": 120, "PLT": 21, "H3K27Me3": 119, "BM.MONOCYTES": 15, "Patient_id": 0, "MTOR.pS2448": 162, "BIRC2": 56, "SMAD4": 223, "PRKCA.pS657": 194, "BM.BLAST": 14, "GAB2.pY452": 111, "STAT5A_B": 240, "SSBP2": 234, "RPS6KB1": 212, "CTNNA1": 85, "NPM1.3542": 170, "LDH": 22, "KIT": 142, "CCNE1": 72, "FN1": 106, "CDKN1B.pS10": 201, "JUN.pS73": 140, "CDK4": 78, "PRIOR.XRT": 6, "CDKN2A": 80, "MYC": 163, "PA2G4": 174, "STAT5A_B.pY694": 241, "CDK1": 76, "PIK3R1_2": 184, "CASP8": 63, "MAPT": 155, "HIF1A": 125, "ELK1.pS383": 100, "TP53": 250, "PTGS2": 204, "AIFM1": 36, "ASH2L": 41, "ATF3": 43, "GAPDH": 112, "CBL": 68, "EGLN1": 94, "CD44": 74, "BIRC5": 57, "LEF1": 144, "XPO1": 259, "EIF4E": 99, "PLAC1": 187, "CD20": 32, "TSC2": 254, "ARC": 40, "BM.PROM": 16, "SOCS2": 227, "PRIOR.MAL": 4, "PRKAA1_2.pT172": 192, "CCND1": 70, "NOTCH1.cl1744": 167, "PRKCB.II": 196, "YWHAZ": 263, "TGM2": 248, "CD19": 34, "PRKCD.pS645": 197, "EGFR.pY992": 93, "PARP1.cl214": 180, "NRP1": 172, "ERG": 104, "EIF2AK2": 95, "PDK1.pS241": 182, "YAP1p": 261, "PIM2": 186, "SMAD1": 218, "SMAD2": 219, "EIF2S1.pS51.": 98, "STAT1": 235, "MDM2": 157, "JUNB": 139, "CD33": 28, "TP53.pS15": 251, "KDR": 141, "MCL1": 156, "BCL2L11": 53, "GSKA_B": 116, "BID": 55, "HNRNPK": 126, "CD10": 31, "EIF2AK2.pT451": 96, "HDAC2": 123, "STAT3.pY705": 239, "PDK1": 181, "BAD.pS136": 47, "RPS6KB1.pT389": 213, "BAD.pS112": 46, "ERBB2.pY1248": 102, "SMAD3": 222, "SPI1": 228, "CREB1": 83, "INPPL1": 133, "RAC1_2_3": 207, "GATA3": 114, "ITGAL": 136, "resp.simple": 266, "CASP7.cl198": 62, "ATG7": 44, "PIM1": 185, "PA2G4.pT37_46": 176, "PRKCD.pS664": 198, "PTPN11": 206, "SPP1": 229, "D835": 9, "STMN1": 244, "TRIM62": 253, "SEX": 1, "ABS.BLST": 13, "MDM4": 158, "CAV1": 67, "CREB1.pS133": 84, "DUSP6": 91, "NCL": 164, "ITD": 8, "ERBB3": 103, "CCND3": 71, "ITGB3": 137, "STAT3": 237, "IGF1R": 130, "Age.at.Dx": 2, "GAB2": 110, "STAT1.pY701": 236, "AKT1_2_3.pS473": 38, "PRKCD.pT507": 199, "NF2.pS518": 166, "PA2G4.pS65": 175, "SMAD5": 224, "AKT1_2_3.pT308": 39, "PTK2": 205, "YWHAE": 262, "SFN": 216, "AKT1": 37, "MAP2K1": 148, "HDAC1": 122, "CDK2": 77, "STK11": 243, "PPARG": 189, "WBC": 12, "BMI1": 58, "PB.BLAST": 17, "LSD1": 146, "NPM1": 169, "CREATININE": 25, "ALBUMIN": 23, "SRC.pY527": 233, "VASP": 255, "CDKN1A": 79, "RPS6.pS240_244": 215, "CASP9": 64, "SMAD2.pS465": 221, "HLA.DR": 33, "ERBB2": 101, "NF2": 165, "PIK3CA": 183, "VHL": 256, "MET.pY1230_1234_1235": 159, "BRAF": 59, "TAZ.pS89": 246, "TAZ": 245, "PTEN": 202, "PPARA": 188, "GRP78": 115, "IRS1.pS1101": 134, "BCL2L1": 52, "HSP90AA1_B1": 127, "YAP1": 260, "Fli1": 105, "CD34": 29, "SMAD2.pS245": 220, "HDAC3": 124, "PB.MONO": 18, "Overall_Survival": 268, "SRC.pY416": 232, "STAT6.pY641": 242, "JMJD6": 138, "CTSG": 88, "FOXO3": 108, "STAT3.pS727": 238, "TRIM24": 252, "RPS6.pS235_236": 214, "ODC1": 173, "MAPK9": 154, "CCNE2": 73, "ASNS": 42, "HSPB1": 129, "LGALS3": 145, "BAD.pS155": 48, "H3K4Me3": 121, "ACTB": 35, "COPS5": 82, "CD13": 27, "XIAP": 258, "Remission_Duration": 267, "PRIOR.CHEMO": 5, "Infection": 7, "FOXO3.S318_321": 109, "SRC": 231, "BILIRUBIN": 24, "BAX": 50, "ZNF296": 264, "PRKAA1_2": 191, "CLPP": 81, "PPP2R2A_B_C_D": 190, "GATA1": 113, "MSI2": 160, "CDKN1B": 200, "CCNB1": 69, "CTNNB1": 86, "GSKA_B.pS21_9": 117, "DIABLO": 89, "RPS6": 211, "PA2G4.pT70": 177, "Ras.Stat": 10, "PARK7": 178, "CASP9.cl330": 66, "IGFBP2": 131, "SQSTM0": 230, "SMAD5.pS463": 225, "AHD": 3, "CTNNB1.pS33_37_41": 87, "WTAP": 257, "TCF4": 247, "LCK": 143, "PTEN.pS380T382T383": 203, "EIF2S1": 97, "HSPA1A_L": 128, "RB1.pS807_811": 209, "Chemo.Simplest": 11, "MAPK14.pT180Y182": 153, "ZNF346": 265, "LYN": 147, "RB1": 208, "SMAD6": 226, "MAPK14": 152, "CASP3": 60, "HGB": 20, "MAPK1": 150, "CD74": 75, "CASP9.cl315": 65, "CASP3.cl175": 61, "MTOR": 161, "PB.PROM": 19, "DLX1": 90, "RELA": 210, "PARP1": 179, "FIBRINOGEN": 26, "BAK1": 49, "FOXO1.pT24_FOXO3.pT32": 107, "CD7": 30, "BECN1": 54, "PRKCA": 193, "NR4A1": 171, "MAPK1_3.pT202Y204": 151, "PRKCB.I": 195, "INPP5D": 132, "TNK1": 249}
 
 def parse_testing_matrix(lname):
     fs = []
-    d = {}
+    di = {}
 
     for r in lname:
         a = r.split("\t")
-        d[a[0]] = a[:]
+        di[a[0]] = a
 
-    for row in d:
-        fs.append(d[row][0:265])
+    for key in di:
+        fs.append(di[key])
+
     for f in fs:
         for e in f:
             i = f.index(e)
             if e in cs:
-                e = cs[e]
-                f[i] = e
+                f[i] = cs[e]
+            elif e in treatments or "train" in e:
+                continue
             else:
-                if not re.search('[a-zA-Z]', e):
-                    e = float(e)
+                e = float(e)
                 f[i] = e
     return fs
 
 def dispatch(l):
     if l[d["Chemo.Simplest"]] == "Anthra-Plus":
-        anthra_plus(l)
+        return(anthra_plus(l))
     elif l[d["Chemo.Simplest"]] == "HDAC-Plus":
-        hdac_plus(l)
+        return(hdac_plus(l))
     elif l[d["Chemo.Simplest"]] == "Flu-HDAC":
-        flu_hdac(l)
+        return(flu_hdac(l))
     elif l[d["Chemo.Simplest"]] == "Anthra-HDAC":
-        anthra_hdac(l)
+        return(anthra_hdac(l))
     elif l[d["Chemo.Simplest"]] == "StdAraC-Plus":
-        stdarac_plus(l)
+        return(stdarac_plus(l))
     else:
         print("bad parse on therapy")
  
 def anthra_plus(l):
-    v = -5.34-0.1711 \
-      * l[d["Age.at.Dx"]] \
+    v = -5.34 \
+      -0.1711*l[d["Age.at.Dx"]] \
       + 3.78*l[d["ALBUMIN"]] \
       + 0.01072*l[d["FIBRINOGEN"]] \
       +2.904*l[d["CASP7.cl198"]] \
@@ -58,7 +64,6 @@ def anthra_plus(l):
       +2.815*l[d["VASP"]]
 
     p = math.exp(v)/(1+math.exp(v))
-
     remission_duration = -5.070*l[d["Age.at.Dx"]] \
                        +61.7*l[d["ERBB2.pY1248"]] \
                        -1.395*l[d["BM.BLAST"]] \
@@ -91,7 +96,7 @@ def anthra_plus(l):
                         +63.7*l[d["SRC.pY416"]] \
                         -75.3*l[d["TGM2"]] \
                         +35.4*l[d["TNK1"]]
-    if p<0.5:
+    if p>0.5:
         outcome = "COMPLETE_REMISSION"
         if l[d["Ras.Stat"]] == -1:
             r_constant=517.1
@@ -108,7 +113,7 @@ def anthra_plus(l):
         else:
             s_constant = 122.4
             overall_survival = overall_survival + s_constant
-        print(l[d["Patient_id"]], outcome, remission_duration, overall_survival)
+        return(l[d["Patient_id"]], outcome, remission_duration, overall_survival)
     else:
         outcome = "RESISTANT"
         remission_duration = "NA"
@@ -118,34 +123,46 @@ def anthra_plus(l):
         else:
             s_constant = 122.4
             overall_survival = overall_survival + s_constant
-        print(l[d["Patient_id"]], outcome, remission_duration, overall_survival)
+        return(l[d["Patient_id"]], outcome, remission_duration, overall_survival)
 
 def flu_hdac(l):
-    remission_duration = -3.689*l[d["BM.BLAST"]] \
-                       - 52.2*l[d["CASP9"]] \
-                       - 43.0*l[d["EIF2AK2"]] \
-                       - 238.2*l[d["Fli1"]] \
-                       + 80.2*l[d["HRNNPK"]] \
-                       + 41.1*l[d["MAPK14.pT180Y182"]] \
-                       - 43.4*l[d["PA2G4.pT37_46"]] \
-                       - 97.5*l[d["PIM1"]]
-    overall_survival = -145.9*l[d["Fli1"]] - 152.3*l[d["SMAD3"]] 
+    remission_duration = (-3.689*l[d["BM.BLAST"]]
+                       - 52.2*l[d["CASP9"]]
+                       - 43.0*l[d["EIF2AK2"]]
+                       # 238.2*l[d["Fli1"]]
+                       + 80.2*l[d["HNRNPK"]]
+                       + 41.1*l[d["MAPK14.pT180Y182"]]
+                       - 43.4*l[d["PA2G4.pT37_46"]])
+                       #- 97.5*l[d["PIM1"]])
+    #overall_survival = -145.9*l[d["Fli1"]] - 152.3*l[d["SMAD3"]] 
+    overall_survival = (382.3
+                     + 58.33*l[d["CAV1"]]
+                     + 75.4*l[d["ERBB2.pY1248"]]
+                     + 6.659*l[d["PB.MONO"]]
+                     #- 109.08*l[d["ITGAL"]]
+                     - 4.105*l[d["Age.at.Dx"]]
+                     #- 274.7*l[d["Ras.Stat"]]
+                     + 123.35*l[d["BAD.pS112"]]
+                     + 42.93*l[d["AKT1_2_3.pT308"]]
+                     - 22.12*l[d["Fli1"]]
+                     #- 111.2*l[d["PRKCA.pS657"]]
+                     - 94.4*l[d["PRKCA"]])
     if l[d["Ras.Stat"]] == -1:
         r_constant = 557.5
-        s_constant = 334.5
+        s_constant = 33.5
         remission_duration = r_constant + remission_duration
         overall_survival = overall_survival + s_constant
     elif l[d["Ras.Stat"]] == 0:
         r_constant = 104.4
-        s_constant = -133
+        s_constant = -13
         remission_duration = r_constant + remission_duration
         overall_survival = overall_survival + s_constant
     else:
         r_constant = 346.5
-        s_constant = 142.4
+        s_constant = 14.4
         remission_duration = r_constant + remission_duration
         overall_survival = overall_survival + s_constant
-    print(l[d["Patient_id"]], "COMPLETE REMISSION", remission_duration, overall_survival)
+    return(l[d["Patient_id"]], "COMPLETE_REMISSION", remission_duration, overall_survival)
 
 def hdac_plus(l):
     v = 2.18 + 7.38*l[62]
@@ -156,7 +173,7 @@ def hdac_plus(l):
                       - 125.2*l[d["ZNF346"]] \
                       + 81.5*l[d["INPPL1"]] \
                       - 28.4*l[d["STAT1"]]
-    if p < 0.5:
+    if p > 0.5:
         remission_duration = -55.9 \
                            + 3.71006*l[d["BM.BLAST"]] \
                            - 24.2804*l[d["CD20"]] \
@@ -165,10 +182,10 @@ def hdac_plus(l):
                            + 7.84340*l[d["CTSG"]] \
                            - 23.9177*l[d["NOTCH3"]] \
                            + 158.370*l[d["RAC1_2_3"]]
-        print(l[0], "COMPLETE REMISSION", remission_duration, survival_duration)
+        return(l[0], "COMPLETE_REMISSION", remission_duration, survival_duration)
     else:
         remission_duration = "NA"
-        print(l[0], "RESISTANT", remission_duration, survival_duration)
+        return(l[0], "RESISTANT", remission_duration, survival_duration)
 
 def stdarac_plus(l):
     v = 1.883 + (3.84 * l[262])
@@ -185,7 +202,7 @@ def stdarac_plus(l):
                       + 5.1*l[d["TAZ.pS89"]] \
                       - 20.2*l[d["PRKAA1_2.pT172"]] \
                       + 24.8*l[d["CBL"]]
-        if p < 0.5:
+        if p > 0.5:
             #COMPLETE REMISSION
             remission_days = (130.740
                        +0.000254*l[d["ABS.BLST"]]
@@ -200,11 +217,11 @@ def stdarac_plus(l):
                        -55.9748*l[d["TP53.pS15"]]
                        -24.9313*l[d["WTAP"]]
                        -2.04675*l[d["ZNF296"]])
-            print(l[0], "COMPLETE_REMISSION", remission_days, survival_days)
+            return(l[0], "COMPLETE_REMISSION", remission_days, survival_days)
         else:
             #RESISTANT
             remission_days = "NA"
-            print(l[0], "RESISTANT", remission_days, survival_days)
+            return(l[0], "RESISTANT", remission_days, survival_days)
     else:
         survival_days = (298.8
                       - 0.998*l[d["CD34"]]
@@ -217,7 +234,7 @@ def stdarac_plus(l):
                       + 5.1*l[d["TAZ.pS89"]]
                       - 20.2*l[d["PRKAA1_2.pT172"]]
                       + 24.8*l[d["CBL"]])
-        if p < 0.5:
+        if p > 0.5:
             #COMPLETE REMISSION
             remission_days = 130.740 \
                            + 0.000254*l[d["ABS.BLST"]] \
@@ -232,11 +249,11 @@ def stdarac_plus(l):
                            - 55.9748*l[d["TP53.pS15"]] \
                            - 24.9313*l[d["WTAP"]] \
                            - 2.04675*l[d["ZNF296"]]
-            print(l[0], "COMPLETE_REMISSION", remission_days, survival_days)
+            return(l[0], "COMPLETE_REMISSION", remission_days, survival_days)
         else:
             #RESISTANT
             remission_days = "NA"
-            print(l[0], "RESISTANT", remission_days, survival_days)
+            return(l[0], "RESISTANT", remission_days, survival_days)
 
 def anthra_hdac(somelist):
 
@@ -245,8 +262,8 @@ def anthra_hdac(somelist):
     numerator = math.exp(v)
     denominator = 1+math.exp(v)
     solution = numerator/denominator
-
-    if solution > 0.5 :
+    
+    if solution < 0.5 :
         #don't have to calculate for days in remission. (set as NA)
         remstatus = 'RESISTANT'
         remdur = 'NA'
@@ -267,7 +284,7 @@ def anthra_hdac(somelist):
                             - 36.3*somelist[d['IRS1.pS1101']] + 37.3*somelist[d['MAPK14.pT180Y182']] + 58.3*somelist[d['MDM4']] + 98.6*somelist[d['MSI2']] \
                             - 29.7*somelist[d['PRKAA1_2.pT172']] - 34.8*somelist[d['PRKCD.pT507']] + 62.9*somelist[d['PTK2']] \
                             - 41.0*somelist[d['RB1.pS807_811']] - 119.0*somelist[d['SMAD5.pS463']] + 69.8*somelist[d['WTAP']]
-        print(somelist[0], remstatus, remdur, Overall_Survival)
+        return(somelist[0], remstatus, remdur, Overall_Survival)
 
     else:
         Overall_Survival = 503.1 - 4.960*somelist[d['Age.at.Dx']] - 0.2212*somelist[d['FIBRINOGEN']] + 33.8*somelist[d['BAD.pS155']] \
@@ -275,9 +292,23 @@ def anthra_hdac(somelist):
                             - 36.3*somelist[d['IRS1.pS1101']] + 37.3*somelist[d['MAPK14.pT180Y182']] + 58.3*somelist[d['MDM4']] + 98.6*somelist[d['MSI2']] \
                             - 29.7*somelist[d['PRKAA1_2.pT172']] - 34.8*somelist[d['PRKCD.pT507']] + 62.9*somelist[d['PTK2']] \
                             - 41.0*somelist[d['RB1.pS807_811']] - 119.0*somelist[d['SMAD5.pS463']] + 69.8*somelist[d['WTAP']]
-        print(somelist[0], remstatus, remdur, Overall_Survival)
+        return(somelist[0], remstatus, remdur, Overall_Survival)
                                    
-data = sys.stdin
-a = parse_testing_matrix(data)
+data = open("data.txt", "rt").read()
+dat = data.split("\n")
+a = parse_testing_matrix(dat)
+s = []
 for l in a:
-    dispatch(l)
+    try:
+        s.append(dispatch(l))
+    except IndexError:
+        continue
+s.sort()
+for x in s:
+    a, b, c, d = x
+    d = abs(d)
+    if c == "NA":
+        print(a, "\t", b, "\tNA", "\t", "%.2f" % d)
+    else:
+        c = abs(c)
+        print(a, "\t", b, "\t", "%.2f" % c, "\t", "%.2f" % d)
